@@ -2,9 +2,15 @@
     'default': {
         'pkgs': ['monit'],
         'service': 'monit',
-        'conf_file': '/etc/monit/monit.conf',
-        'config': {
-            'key': 'value',
+        'conf_file': '/etc/monit/monitrc',
+        'config_includes': '/etc/monit/conf.d',
+        'http_access': {
+            'port': 2812,
+            'bind': '127.0.0.1',
+            'allowed': {
+              'users': ['monit'],
+              'hosts': 'localhost'
+            },
         },
     },
     'Debian': {

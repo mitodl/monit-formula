@@ -1,0 +1,14 @@
+{% set monit = salt.grains.filter_by({
+    'default': {
+        'pkgs': ['monit'],
+        'service': 'monit',
+        'conf_file': '/etc/monit/monit.conf',
+        'config': {
+            'key': 'value',
+        },
+    },
+    'Debian': {
+    },
+    'RedHat': {
+    },
+}, grain='os_family', merge=salt.pillar.get('monit:overrides'), base='default') %}

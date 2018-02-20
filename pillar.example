@@ -1,0 +1,7 @@
+# -*- mode: yaml -*-
+monit:
+  overrides:
+    pkg: monit
+    conf_file: /usr/local/etc/monit/monit.conf
+  config:
+    key: othervalue

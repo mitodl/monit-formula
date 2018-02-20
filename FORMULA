@@ -1,0 +1,9 @@
+name: monit
+os: RedHat, CentOS, Ubuntu, Debian
+os_family: RedHat, Debian
+version: 201802
+release: 1
+summary: SaltStack formula for deploying and maintaining Monit
+description: SaltStack formula for deploying and maintaining Monit
+top_level_dir: monit
+recommended: 

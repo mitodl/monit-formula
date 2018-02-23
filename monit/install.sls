@@ -1,10 +1,10 @@
-{% from "monit/map.jinja" import monit with context %}
+{% from "monit/map.jinja" import monit_app with context %}
 
 include:
   - .service
 
-monit:
+install_monit:
   pkg.installed:
-    - pkgs: {{ monit.pkgs }}
+    - name: {{ monit_app.pkg }}
     - require_in:
         - service: monit_service_running

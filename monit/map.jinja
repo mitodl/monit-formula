@@ -1,6 +1,6 @@
-{% set monit = salt.grains.filter_by({
+{% set monit_app = salt.grains.filter_by({
     'default': {
-        'pkgs': ['monit'],
+        'pkg': 'monit',
         'service': 'monit',
         'conf_file': '/etc/monit/monitrc',
         'config_includes': '/etc/monit/conf.d',
@@ -8,8 +8,8 @@
             'port': 2812,
             'bind': '127.0.0.1',
             'allowed': {
-              'users': ['monit'],
-              'hosts': 'localhost'
+              'users': ['monit:pass'],
+              'hosts': ['localhost']
             },
         },
     },
@@ -17,4 +17,4 @@
     },
     'RedHat': {
     },
-}, grain='os_family', merge=salt.pillar.get('monit:overrides'), base='default') %}
+}, grain='os_family', merge=salt.pillar.get('monit_app'), base='default') %}

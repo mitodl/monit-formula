@@ -1,7 +1,85 @@
-# -*- mode: yaml -*-
 monit:
-  overrides:
-    pkg: monit
-    conf_file: /usr/local/etc/monit/monit.conf
-  config:
-    key: othervalue
+  mail_alert:
+    account:
+      server: smtp.gmail.com
+      port: 587
+      email: some@example.com
+      password: p@ssw0rd;)
+    send_as: monit@example.com
+    users:
+      - first@example.com
+      - second@example.com
+
+  http_access:
+    port: 2812
+    bind: 127.0.0.1
+    allowed:
+      users:
+        - 'user1:pass1'
+      hosts:
+        - 127.0.0.1
+        - 192.168.0.10
+        - 192.168.0.11
+
+  modules:
+    nginx_init:
+      process:
+        custom:
+          name: nginx
+        with:
+          pidfile: /var/run/nginx.pid
+        config:
+          group: www
+          start: "/etc/init.d/nginx start"
+          stop: "/etc/init.d/nginx stop"
+        if:
+          failed: host 127.0.0.1 port 80 protocol http
+          action: restart
+
+    postfix:
+      process:
+        with:
+          pidfile: /var/spool/postfix/pid/master.pid
+        config:
+          group: mail
+          start: "/etc/init.d/postfix start"
+          stop: "/etc/init.d/postfix stop"
+        if:
+          failed: port 25 protocol smtp
+          action: restart
+
+    cron:
+      process:
+        with:
+          pidfile: /var/run/cron.pid
+        config:
+          group: system
+          start: "/etc/init.d/cron start"
+          stop: "/etc/init.d/cron stop"
+          depends: on cron_rc
+
+      file:
+        custom:
+          name: cron_rc
+        with:
+          path: /etc/init.d/cron
+        if:
+          failed: checksum
+          action: unmonitor
+        if2:
+          failed: permission 755
+          action: unmonitor
+        if3:
+          failed: uid root
+          action: unmonitor
+        if4:
+          failed: gid root
+          action: unmonitor
+
+    gdm:
+      process:
+        with:
+          pidfile: /var/run/gdm.pid
+        config:
+          start: "/etc/init.d/gdm start"
+          stop: "/etc/init.d/gdm stop"

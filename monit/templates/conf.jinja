@@ -6,7 +6,7 @@ set httpd port {{ http_access.port }} and
   allow {{ host }}
 {%- endfor %}
 {%- for userdata in http_access.allowed.users %}
-  allow {{ userdata[0] }}:{{ userdata[1] }}
+  allow {{ userdata }}
 {%- endfor %}
 
 include {{ config_includes }}/*

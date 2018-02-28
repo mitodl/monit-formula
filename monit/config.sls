@@ -4,7 +4,7 @@ include:
   - .install
   - .service
 
-monit-config:
+monit_config:
   file.managed:
     - name: {{ monit_app.conf_file }}
     - source: salt://monit/templates/conf.jinja
@@ -19,7 +19,7 @@ monit-config:
     - require:
       - pkg: install_monit
 
-monit-modules:
+monit_modules:
   file.managed:
     - name: {{ monit_app.config_includes }}/modules
     - source: salt://monit/templates/modules.jinja
@@ -28,3 +28,12 @@ monit-modules:
         modules: {{ monit_app.get('modules', {}) }}
     - watch_in:
       - service: monit_service_running
+
+{% if monit_app.notification == 'slack' %}
+monit_slack_notification:
+  file.managed:
+    - name: /usr/local/bin/slack.sh
+    - source: salt://monit/templates/slack.sh
+    - template: jinja
+    - mode: '0755'
+{% endif %}

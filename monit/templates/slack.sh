@@ -1,5 +1,3 @@
-{% set slack_webhook_url_devops = salt.vault.read('secret-operations/global/slack/slack_webhook_url').data.value %}
-
 #!/bin/bash
 
 COLOR=${MONIT_COLOR:-$([[ $MONIT_EVENT == *"succeeded"* ]] && echo good || echo danger)}
@@ -20,4 +18,4 @@ PAYLOAD="{
   ]
 }"
 
-curl -s -X POST -H "application/json" -d "payload=$PAYLOAD" {{ slack_webhook_url_devops }}
+curl -s -X POST -H "application/json" -d "payload=$PAYLOAD" {{ monit_app.slack_webhook_url }}

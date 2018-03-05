@@ -1,3 +1,5 @@
+{% set id = salt.grains.get('id') %}
+
 #!/bin/bash
 
 COLOR=${MONIT_COLOR:-$([[ $MONIT_EVENT == *"succeeded"* ]] && echo good || echo danger)}
@@ -11,7 +13,7 @@ PAYLOAD="{
       \"mrkdwn_in\": [\"text\"],
       \"fields\": [
         { \"title\": \"Date\", \"value\": \"$MONIT_DATE\", \"short\": true },
-        { \"title\": \"Host\", \"value\": \"$MONIT_HOST\", \"short\": true },
+        { \"title\": \"Host\", \"value\": \"{{ id }}\", \"short\": true },
         { \"title\": \"Source\", \"value\": \"monit\", \"short\": true}
       ]
     }

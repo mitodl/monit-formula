@@ -36,4 +36,6 @@ monit_slack_notification:
     - source: salt://monit/templates/slack.sh
     - template: jinja
     - mode: '0755'
+    - context:
+        slack_webhook_url: {{ monit_app.slack_webhook_url }}
 {% endif %}

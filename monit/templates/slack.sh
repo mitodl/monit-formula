@@ -20,4 +20,4 @@ PAYLOAD="{
   ]
 }"
 
-curl -s -X POST -H "application/json" -d "payload=$PAYLOAD" {{ slack_mitx_eng_alerts }}
+curl -s -X POST -H "application/json" -d "payload=$PAYLOAD" {{ slack_webhook_url }}

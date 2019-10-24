@@ -1,19 +1,19 @@
-{%- for module, module_v in modules.iteritems() -%}
-{%- for mod_name, mod_name_v in module_v.iteritems() -%}
-{%- if mod_name_v.has_key('custom') -%}
+{%- for module, module_v in modules.items() -%}
+{%- for mod_name, mod_name_v in module_v.items() -%}
+{%- if 'custom' in mod_name_v -%}
 {%- set name = mod_name_v.custom.name -%}
 {% else %}
 {%- set name = module -%}
 {%- endif -%}
-{%- for kind, kind_v in mod_name_v.iteritems() -%}
-{%- for element, element_v in kind_v.iteritems() -%}
+{%- for kind, kind_v in mod_name_v.items() -%}
+{%- for element, element_v in kind_v.items() -%}
 {%- if 'pidfile' in kind_v or 'path' in kind_v or 'address' in kind_v -%}
 check {{ mod_name }} {{ name }} with {{ element }} {{ element_v }}
 {%- endif -%}
 {%- endfor -%}
 {% endfor %}
-{%- for kind, kind_v in mod_name_v.iteritems() -%}
-{%- for element, element_v in kind_v.iteritems() -%}
+{%- for kind, kind_v in mod_name_v.items() -%}
+{%- for element, element_v in kind_v.items() -%}
 {%- if 'config' in kind -%}
 {%- if 'start' in element or 'stop' in element %}
 {{ element }} program = "{{ element_v }}"
